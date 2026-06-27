@@ -1,1 +1,1 @@
-web: gunicorn loanapproval.loanapproval.wsgi:application --log-file -
+web: gunicorn loanapproval.wsgi:application --log-file -
