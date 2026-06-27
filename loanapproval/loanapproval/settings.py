@@ -29,7 +29,19 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-xu*5^61-^)!m&h8cw0+t=oka3#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('1', 'true', 'yes', 'on')
 
-ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if host.strip()]
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '*').split(',') if host.strip()]
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]
+
+# Some hosting platforms may not provide a .env file; default to Railway host if not set.
+if not CSRF_TRUSTED_ORIGINS and 'web-production-2ca1d.up.railway.app' in ALLOWED_HOSTS:
+    CSRF_TRUSTED_ORIGINS = ['https://web-production-2ca1d.up.railway.app']
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_SSL_REDIRECT = False
 
 
 # Application definition
