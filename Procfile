@@ -1,1 +1,1 @@
-web: gunicorn --chdir loanapproval loanapproval.wsgi:application --log-file -
+web: gunicorn loanapproval.loanapproval.wsgi:application --log-file -
